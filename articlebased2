@@ -1,0 +1,18 @@
+pragma solidity ^0.8.1;
+contract cadeia {
+  event PedidoCompra (address vendedor, int256 NSU, int256 Quantidade, int256 Unidade, int256 Preco, int256 Tax);
+  event Fabricar (int256 NSU, int256 Quantidade, int256 Unidade);
+  event EmitirNota (adress comprador, int256 NSU, int256 NSU, int Quantidade, int256 Unidade, int256 Preco, int256 Tax);
+  event ReceberProduto (string hash);
+  event ReceberNota (address vendedor, int256 NSU, int256 Quantidade, int256 Unidade, int256 Preco, int256 Tax);
+  function comprar (address vendedor, int256 NSU, int256 Quantidade, int256 Unidade, int256 Preco, int256 Tax) public {
+    emit PedidoCompra (vendedor, NSU, Quantidade, Unidade, Preco, Tax);}
+  funtion produzir (address comprador, int256 NSU, int256 Quantidade, int256 Unidade, int256 Preco, int256 Tax) public {
+    emit Fabricar (NSU, Quantidade, Unidade);
+    emit EmitirNota (comprador, NSU, Quantidade, Unidade, Preco, Tax);}
+  function receber (address vendedor, string hash, int256 NSU, int256 Quantidade, int256 Unidade, int256 Preco, int256 Tax, int256 Quantidade_recebida) public{
+    emit ReceberProduto (hash);
+    assert (NSU_recebido==NSU);
+    assert (Quantidade_recebida==Quantidade);
+    emit ReceberNota (vendedor, NSU, Quantidade, Unidade, Preco, Tax);
+  }}
