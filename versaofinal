@@ -1,0 +1,144 @@
+// SPDX-License-Identifier: Manu
+
+pragma solidity >=0.4.0 <8.4;
+
+
+
+contract cadeia {
+
+    
+    
+    event EmissaoPedidoFornecedor1 (address Fornecedor1, int8 DefBasicas1, int8 DefBasicas2, int8 DefBasicas3);
+    event DespachoPedidoFornecedor1 (int8 NSU1, int8 Quantidade1, int8 Lote1, int8 NSU2, int8 Quantidade2, int8 Lote2, int8 NSU3, int8 Quantidade3, int8 Lote3);
+    event EmitirNotaFornecedor1 (address Operador, int8 NSU1, int Quantidade1, int8 Preco1, int8 NSU2, int Quantidade2, int8 Preco2, int8 NSU3, int Quantidade3, int8 Preco3);
+    
+    event EmissaoPedidoFornecedor2 (address Fornecedor2, int8 DefBasicasA, int8 DefBasicasB, int8 DefBasicasC);
+    event DespachoPedidoFornecedor2 (int8 NSUA, int8 QuantidadeA, int8 LoteA, int8 NSUB, int8 QuantidadeB, int8 LoteB, int8 NSUC, int8 QuantidadeC, int8 LoteC);
+    event EmitirNotaFornecedor2 (address Operador, int8 NSUA, int QuantidadeA, int8 PrecoA,int8 NSUB, int QuantidadeB, int8 PrecoB, int8 NSUC, int QuantidadeC, int8 PrecoC);
+    
+    event ReceberProdutoProdutor(string hash);
+    event ReceberNotaProdutor (address Fornecedor1, address Fornecedor2, int8 DefBasicas1, int8 DefBasicas2, int8 DefBasicas3, int8 DefBasicasA, int8 DefBasicasB, int8 DefBasicasC);
+    event FabricarProdutor (address Operador, int8 DefBasicas1, int8 DefBasicas2, int8 DefBasicas3, int8 DefBasicasA, int8 DefBasicasB, int8 DefBasicasC); 
+    event ProducaoProduto1Produtor (string Produto1, address Distribuidor, int8 S, int8 Quantidade12B, int8 Unidade12B, int8 Preco12B);
+    event ProducaoProduto2Produtor (string Produto2, int8 R, int8 Quantidade3AC, int8 Unidade3AC, int8 Preco3AC);
+    event DespachoPedidoProdutor1 (string Produto1, address Distribuidor, int8 S, int Quantidade12B, int8 Unidade12B, int8 Preco12B);
+    event DespachoPedidoProdutor2 (string Produto2, address Distribuidor, int8 R, int Quantidade3AC, int8 Unidade3AC, int8 Preco3AC);
+    event EmitirNotaProdutor1 (string Produto1, address Distribuidor, int8 S, int Quantidade12B, int8 Unidade12B, int8 Preco12B );
+    event EmitirNotaProdutor2 (string Produto2, address Distribuidor, int8 R, int Quantidade3AC, int8 Unidade3AC, int8 Preco3AC);
+    
+    
+    event ReceberProdutoDistribuidor (string hash);
+    event ReceberNotaDistribuidor (address Operador, address Fornecedor1, address Fornecedor2, int8 DefBasicas1, int8 DefBasicas2, int8 DefBasicas3, int8 DefBasicasA, int8 DefBasicasB, int8 DefBasicasC);
+    event DespachoPedidoDistribuidor (int8 DefBasicas1, int8 DefBasicas2, int8 DefBasicas3, int8 DefBasicasA, int8 DefBasicasB, int8 DefBasicasC); 
+    event EmitirNotaDistribuidor (address Distribuidor, int8 DefBasicas1, int8 DefBasicas2, int8 DefBasicas3, int8 DefBasicasA, int8 DefBasicasB, int8 DefBasicasC);
+    
+    
+    event ReceberProdutoCliente1 (string hash);
+    event ReceberNotaCliente1 (int8 DefBasicas1, int8 DefBasicas2, int8 DefBasicas3);
+    
+    
+    
+    struct DefBasicas1 {int8 NSU1; int8 Quantidade1; int8 Preco1; int8 Peso1; int8 Lote1; int Turno1;}        
+    struct DefBasicas2 {int8 NSU2; int8 Quantidade2; int8 Preco2; int8 Peso2; int8 Lote2; int8 Turno2;}
+    struct DefBasicas3 {int8 NSU3; int8 Quantidade3; int8 Preco3; int8 Peso3; int8 Lote3; int8 Turno3;}
+    struct DefBasicasA {int8 NSUA; int8 QuantidadeA; int8 PrecoA; int8 PesoA; int8 LoteA; int8 TurnoA;}
+    struct DefBasicasB {int8 NSUB; int8 QuantidadeB; int8 PrecoB; int8 PesoB;  int8 LoteB; int8 TurnoB;}
+    struct DefBasicasC {int8 NSUC; int8 QuantidadeC; int8 PrecoC; int8 PesoC; int8 LoteC; int8 TurnoC;}
+    
+    struct NSU123ABC {int8 NSU1; int8 NSU2; int8 NSU3; int8 NSUA; int8 NSUB; int8 NSUC;}
+    struct NSU123ABCrecebido {int8 NSU1_recebido; int8 NSU2_recebido; int8 NSU3_recebido; int8 NSUA_recebido; int8 NSUB_recebido; int8 NSUC_recebido;}
+    
+   
+    struct S { uint8 NSU1; uint8 NSU2; uint8 NSUB;}
+        int x;
+            mapping(uint8 => mapping(uint8 => S)) data1;
+     
+     
+    struct R { uint8 NSU3; uint8 NSUA; uint8 NSUC;}
+        int y;
+            mapping(uint8 => mapping(uint8 => R)) data2;
+     
+    function PedidoFornecedor1 (address Fornecedor1, int8 DefBasicas1, int8 DefBasicas2, int8 DefBasicas3) public {
+        emit EmissaoPedidoFornecedor1 (Fornecedor1, DefBasicas1, DefBasicas2, DefBasicas3);}
+            
+    function PedidoFornecedor2 (address Fornecedor2,  int8 DefBasicasA, int8 DefBasicasB, int8 DefBasicasC) public {
+        emit EmissaoPedidoFornecedor2 (Fornecedor2, DefBasicasA, DefBasicasB, DefBasicasC);}
+            
+    function DespachoFornecedor1 (int8 NSU1, int8 Quantidade1, int8 Lote1, int8 NSU2, int8 Quantidade2, int8 Lote2, int8 NSU3, int8 Quantidade3, int8 Lote3) public {
+        emit DespachoPedidoFornecedor1 (NSU1, Quantidade1, Lote1, NSU2, Quantidade2, Lote2, NSU3, Quantidade3, Lote3);}
+            
+    function DespachoFornecedor2 (int8 NSUA, int8 QuantidadeA, int8 LoteA, int8 NSUB, int8 QuantidadeB, int8 LoteB, int8 NSUC, int8 QuantidadeC, int8 LoteC) public {
+        emit DespachoPedidoFornecedor2 (NSUA, QuantidadeA, LoteA, NSUB, QuantidadeB, LoteB, NSUC, QuantidadeC, LoteC);}
+            
+    function NotaFornecedor1 (address Operador,int8 NSU1, int Quantidade1, int8 Preco1, int8 NSU2, int Quantidade2, int8 Preco2, int8 NSU3, int Quantidade3, int8 Preco3) public {
+        emit EmitirNotaFornecedor1 (Operador, NSU1, Quantidade1, Preco1, NSU2, Quantidade2, Preco2, NSU3, Quantidade3, Preco3);}
+            
+    function NotaFornecedor2 (address Operador, int8 NSUA, int QuantidadeA, int8 PrecoA,int8 NSUB, int QuantidadeB, int8 PrecoB, int8 NSUC, int QuantidadeC, int8 PrecoC) public {
+        emit EmitirNotaFornecedor2 (Operador, NSUA, QuantidadeA, PrecoA, NSUB, QuantidadeB, PrecoB, NSUC, QuantidadeC, PrecoC);}
+            
+            
+            
+    function ReceberProdutoProd (string memory hash,int8 NSU123ABC, int8 NSU123ABCrecebido) public {
+        emit ReceberProdutoProdutor (hash);
+        assert (NSU123ABCrecebido==NSU123ABC);}
+
+            
+            
+    function ReceberNotaProd (address Fornecedor1, address Fornecedor2, int8 DefBasicas1, int8 DefBasicas2, int8 DefBasicas3, int8 DefBasicasA, int8 DefBasicasB, int8 DefBasicasC) public {
+        emit ReceberNotaProdutor (Fornecedor1, Fornecedor2, DefBasicas1, DefBasicas2, DefBasicas3, DefBasicasA, DefBasicasB, DefBasicasC);}
+        
+   
+    function FabricarProd (address Operador, int8 DefBasicas1, int8 DefBasicas2, int8 DefBasicas3, int8 DefBasicasA, int8 DefBasicasB, int8 DefBasicasC) public {
+        emit FabricarProdutor (Operador, DefBasicas1, DefBasicas2, DefBasicas3, DefBasicasA, DefBasicasB, DefBasicasC);}
+        
+   
+    function ProducaoProduto1Prod (string memory Produto1, address Distribuidor, int8 S, int8 Quantidade12B, int8 Unidade12B, int8 Preco12B) public {
+        emit ProducaoProduto1Produtor (Produto1, Distribuidor, S, Quantidade12B, Unidade12B, Preco12B);}
+            
+            
+    function ProducaoProduto2Prod (string memory Produto2, int8 R, int8 Quantidade3AC, int8 Unidade3AC, int8 Preco3AC) public {
+        emit ProducaoProduto2Produtor (Produto2, R, Quantidade3AC, Unidade3AC, Preco3AC);}
+        
+    function DespachoPedidoProd1 (string memory Produto1, address Distribuidor, int8 S, int8 Quantidade12B, int8 Unidade12B, int8 Preco12B) public {
+        emit DespachoPedidoProdutor1 (Produto1, Distribuidor, S, Quantidade12B, Unidade12B, Preco12B);}
+            
+    function DespachoPedidoProd2 (string memory Produto2, address Distribuidor, int8 R, int8 Quantidade3AC, int8 Unidade3AC, int8 Preco3AC) public {
+        emit DespachoPedidoProdutor1 (Produto2, Distribuidor, R, Quantidade3AC, Unidade3AC, Preco3AC);}    
+            
+    function EmitirNotaProd1 (string memory Produto1, address Distribuidor, int8 S, int Quantidade12B, int8 Unidade12B, int8 Preco12B) public {
+        emit EmitirNotaProdutor1 (Produto1, Distribuidor, S, Quantidade12B, Unidade12B, Preco12B);}
+            
+    function EmitirNotaProd2 (string memory Produto2, address Distribuidor, int8 R, int Quantidade3AC, int8 Unidade3AC, int8 Preco3AC) public {
+        emit EmitirNotaProdutor2 (Produto2, Distribuidor, R, Quantidade3AC, Unidade3AC, Preco3AC);}
+            
+        
+    function ReceberProdutoDist (string memory hash, int8 NSU123ABC, int8 NSU123ABCrecebido) public {
+        emit ReceberProdutoDistribuidor (hash);
+        assert (NSU123ABCrecebido==NSU123ABC);}
+
+
+        
+    function ReceberNotaDist (address Operador, address Fornecedor1, address Fornecedor2,  int8 DefBasicas1, int8 DefBasicas2, int8 DefBasicas3, int8 DefBasicasA, int8 DefBasicasB, int8 DefBasicasC) public {
+        emit ReceberNotaDistribuidor (Operador,  Fornecedor1, Fornecedor2, DefBasicas1, DefBasicas2, DefBasicas3, DefBasicasA, DefBasicasB, DefBasicasC);}
+        
+    
+            
+    function DespachoPedidoDist (int8 DefBasicas1, int8 DefBasicas2, int8 DefBasicas3, int8 DefBasicasA, int8 DefBasicasB, int8 DefBasicasC) public {
+        emit DespachoPedidoDistribuidor (DefBasicas1, DefBasicas2, DefBasicas3, DefBasicasA, DefBasicasB, DefBasicasC);}
+            
+    function EmitirNotaDist (address Distribuidor, int8 DefBasicas1, int8 DefBasicas2, int8 DefBasicas3, int8 DefBasicasA, int8 DefBasicasB, int8 DefBasicasC) public {
+        emit EmitirNotaDistribuidor (Distribuidor, DefBasicas1, DefBasicas2, DefBasicas3, DefBasicasA, DefBasicasB, DefBasicasC);}
+            
+            
+    function ReceberProdutoClien1 (string memory hash, int8 NSU123ABC, int8 NSU123ABCrecebido) public {
+        emit ReceberProdutoCliente1 (hash);
+        assert (NSU123ABCrecebido==NSU123ABC);}
+        
+    function ReceberNotaClien1 (int8 DefBasicas1, int8 DefBasicas2, int8 DefBasicas3) public {
+        emit ReceberNotaCliente1 ( DefBasicas1, DefBasicas2, DefBasicas3);}
+       
+}
+    
+
+
+
